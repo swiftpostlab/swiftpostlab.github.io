@@ -17,15 +17,14 @@ const BaseLayout: React.FC<Props> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main >
-        <Stack minHeight='100vh'>
+        <Stack minHeight='100vh' minWidth='100%'>
           <Stack 
-            width="100%" 
-            height="100%" 
             maxWidth="1200px"
-            marginX="0.5rem"
+            paddingBottom="2.5rem"
+            paddingTop="1rem"
+            paddingX="0.5rem"
             flexGrow={1} 
-            marginBottom="2.5rem"
-            marginTop="1rem"
+            
             sx={(theme) => ({
               [theme.breakpoints.up('md')]: {
                 marginX: 'auto',
