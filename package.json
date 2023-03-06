@@ -9,7 +9,6 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --project tsconfig.json",
-    "mock": "(rm ./config -rf || true) && withArgs(){ cp -r \"./mocks/$1/config\" ./config; }; withArgs",
     "hash": "yarn-${{ hashFiles('yarn.lock') }}s",
     "install-immutable": "yarn install --immutable --immutable-cache --check-cache"
   },
