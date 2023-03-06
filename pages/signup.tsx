@@ -52,10 +52,6 @@ const Signup: React.FC = () => {
     console.log('Success')
     console.log(resp)
   }
-
-  const handleSignUpSuccess = () => {
-    () => router.push(pages.signup)
-  }
   
 
   return (
