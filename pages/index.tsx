@@ -19,8 +19,8 @@ const Index: React.FC = () => {
         flexGrow={1}
         height="100%"
       >
-        <Typography variant="h1">Fast Forward</Typography>
-        <Typography variant="subtitle1">Quick website creation</Typography>
+        <Typography variant="h1">SwiftPost</Typography>
+        <Typography variant="subtitle1">Swift web generation</Typography>
         <Stack direction="row" justifyContent="center" spacing="2rem" paddingTop="2rem">
           <Button variant='contained' onClick={() => router.push(pages.signup)}>Sign Up</Button>
           <Button variant='outlined'>Log In</Button>

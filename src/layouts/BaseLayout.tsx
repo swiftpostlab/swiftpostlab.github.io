@@ -11,8 +11,8 @@ const BaseLayout: React.FC<Props> = ({ children }) => {
   return (
     <>
       <Head>
-        <title>Fast Forward</title>
-        <meta name="description" content="Generated with Fast Forward" />
+        <title>SwiftPost</title>
+        <meta name="description" content="Swift web generation" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

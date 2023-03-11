@@ -1,8 +1,8 @@
 {
-  "name": "fast-forward",
+  "name": "swiftpostlab",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://fcole90.github.io/fast-forward/",
+  "homepage": "https://swiftpostlab.github.io",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
