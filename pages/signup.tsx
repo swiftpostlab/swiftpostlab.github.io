@@ -1,6 +1,7 @@
 
 import { Button, TextField, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
+import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
 import { post } from '../src/api/api'
 import { BASE_URL } from '../src/api/constants'
@@ -13,6 +14,7 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
+  const [isSignUpCompleted, setIsSignUpCompleted] = useState(false)
   const sessionContext = useContext(SessionContext)
 
   useEffect(() => {
@@ -21,12 +23,12 @@ const Signup: React.FC = () => {
 
   const handleSignUpClick = async () => {
     if (password.length < 8) {
-      setError("Password too short")
+      setError('Password too short')
       return
     }
 
     if (password !== confirmPassword) {
-      setError("Password confirmation not matching")
+      setError('Password confirmation not matching')
       return
     }
 
@@ -39,8 +41,8 @@ const Signup: React.FC = () => {
     )
 
     if (resp.isError) {
-      console.log("SignUp error")
-      setError("Could not sign in. Try again later.")
+      console.log('SignUp error')
+      setError('Could not sign in. Try again later.')
       return
     }
     
@@ -48,14 +50,17 @@ const Signup: React.FC = () => {
   }
 
   const handleSignUpSuccess = async () => {
-    setError("")
+    setError('')
     console.log('Success! Authenticating...')
 
-    const result = sessionContext.login(username, password)
+    const isAuthSuccess = sessionContext.login(username, password)
+    if (!isAuthSuccess) {
+      setError('Something went wrong, try again later.')
+      return
+    }
 
-
-    console.log('Authenticated!')
-    console.log(result)
+    setError('')
+    setIsSignUpCompleted(true)
   }
   
 
@@ -68,34 +73,49 @@ const Signup: React.FC = () => {
         flexGrow={1}
         height="100%"
       >
-        <Typography variant="h1">Sign up</Typography>
-        <Typography variant="subtitle1">Please, fill up your data</Typography>
-        <Stack direction="column" justifyContent="center" spacing="2rem" paddingTop="2rem">
-          <TextField
-            required
-            label="Username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          <TextField
-            required
-            label="Password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          <TextField
-            required
-            label="Confirm Password"
-            type="password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-          />
-          {error.length > 0 && 
-            <Typography variant="body1" color="error" >{error}</Typography>
-          }
-          <Button variant='contained' onClick={handleSignUpClick}>Sign Up</Button>
-        </Stack>
+        {
+          isSignUpCompleted ? (
+            <>
+              <Typography variant="h1">Sign up completed!</Typography>
+              <Typography variant="subtitle1">Go back{' '}<Link href={'/'}>home</Link></Typography>
+            </>
+          )
+            : (
+              <>
+                <Typography variant="h1">Sign up</Typography>
+                <Typography variant="subtitle1">Please, fill up your data</Typography>
+                <Stack direction="column" justifyContent="center" spacing="2rem" paddingTop="2rem">
+                  <TextField
+                    required
+                    label="Username"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                  />
+                  <TextField
+                    required
+                    label="Password"
+                    type="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                  />
+                  <TextField
+                    required
+                    label="Confirm Password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={e => setConfirmPassword(e.target.value)}
+                  />
+                  {error.length > 0 && 
+                    <Typography variant="body1" color="error">
+                      {error}
+                    </Typography>
+                  }
+                  <Button variant="contained" onClick={handleSignUpClick}>Sign Up</Button>
+                </Stack>
+              </>
+            )
+        }
+        
       </Stack>
     </BaseLayout>
   )

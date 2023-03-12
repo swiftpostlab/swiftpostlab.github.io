@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { post } from '../../api/api'
 import { BASE_URL } from '../../api/constants'
-import { SessionContext } from "../contexts/SessionContext"
+import { SessionContext } from '../contexts/SessionContext'
 
 
 const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
@@ -18,7 +18,7 @@ const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) =>
     )
 
     if (resp.isError) {
-      console.log("Auth error")
+      console.log('Auth error')
       // Send to Log-in
       return false
     }

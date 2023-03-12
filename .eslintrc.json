@@ -11,14 +11,25 @@
   "rules": {
     "comma-dangle": ["error", "always-multiline"],
     "indent": ["error", 2],
+    "jsx-quotes": ["error", "prefer-double"],
     "no-multiple-empty-lines": "error",
     "no-multi-spaces": "error",
     "object-curly-spacing": ["error", "always"],
     "padded-blocks": ["error", "never"],
+    "quotes": ["error", "single"],
     "semi": ["error", "never"],
 
     "react/react-in-jsx-scope": "off",
     // Just leave ts infer them
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { 
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
   }
 }
