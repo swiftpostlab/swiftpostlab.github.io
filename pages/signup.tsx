@@ -19,7 +19,7 @@ const Signup: React.FC = () => {
     setError('')
   }, [password, confirmPassword])
 
-  const handleSignUp = async () => {
+  const handleSignUpClick = async () => {
     if (password.length < 8) {
       setError("Password too short")
       return
@@ -39,12 +39,35 @@ const Signup: React.FC = () => {
     )
 
     if (resp.isError) {
-      console.log("Error")
+      console.log("SignUp error")
+      setError("Could not sign in. Try again later.")
+      return
+    }
+    
+    handleSignUpSuccess()
+  }
+
+  const handleSignUpSuccess = async () => {
+    setError("")
+    console.log('Success! Authenticating...')
+
+    // Authenticate
+    const resp = await post(
+      `${BASE_URL}/auth/login`,
+      {
+        username,
+        password,
+      }
+    )
+
+    if (resp.isError) {
+      console.log("Auth error")
+      // Send to Log-in
       return
     }
 
-    
-    console.log('Success')
+
+    console.log('Authenticated!')
     console.log(resp)
   }
   
@@ -84,7 +107,7 @@ const Signup: React.FC = () => {
           {error.length > 0 && 
             <Typography variant="body1" color="error" >{error}</Typography>
           }
-          <Button variant='contained' onClick={handleSignUp}>Sign Up</Button>
+          <Button variant='contained' onClick={handleSignUpClick}>Sign Up</Button>
         </Stack>
       </Stack>
     </BaseLayout>
