@@ -23,12 +23,17 @@ const Index: React.FC = () => {
       >
         <Typography variant="h1">SwiftPost</Typography>
         <Typography variant="subtitle1">Swift web generation</Typography>
-        {!session.isActive() && (
-          <Stack direction="row" justifyContent="center" spacing="2rem" paddingTop="2rem">
+        <Stack direction="row" justifyContent="center" spacing="2rem" paddingTop="2rem">
+        {session.isActive() ? 
+        (
+          <Button variant='outlined' onClick={session.logout}>Log Out</Button>
+        ) : (
+          <>
             <Button variant='contained' onClick={() => router.push(pages.signup)}>Sign Up</Button>
-            <Button variant='outlined'>Log In</Button>
-          </Stack>
+            <Button variant='outlined' onClick={() => router.push(pages.login)}>Log In</Button>
+          </>
         )}
+        </Stack>
         
       </Stack>
     </BaseLayout>

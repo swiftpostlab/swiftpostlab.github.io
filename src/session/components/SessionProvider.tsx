@@ -30,10 +30,11 @@ const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) =>
   }
 
   const renewToken = async () => { console.log('Not implemented yet'); return false }
-  const isActive = () => token != null 
+  const isActive = () => token != null
+  const logout = () => setToken(null)
 
   return (
-    <SessionContext.Provider value={{ token, login, renewToken, isActive }}>
+    <SessionContext.Provider value={{ token, login, renewToken, isActive, logout }}>
       {children}
     </SessionContext.Provider>
   )
