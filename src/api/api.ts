@@ -16,7 +16,12 @@ export const request = async (
   })
 }
 
-export const post = async <BodyT = unknown, ResponseT = unknown,>(url: string, content: BodyT): Promise<ResponseT | null> => {
+interface Response<DataT> {
+  data: DataT | null,
+  isError: boolean
+}
+
+export const post = async <BodyT = unknown, ResponseT = unknown,>(url: string, content: BodyT): Promise<Response<ResponseT>> => {
   const resp = await request(
     url,
     'POST',
@@ -31,8 +36,13 @@ export const post = async <BodyT = unknown, ResponseT = unknown,>(url: string, c
 
   if (!resp.ok) {
     console.warn(resp.status)
-    return null
+    return { data: null, isError: true }
+  }
+  
+  const contentType = resp.headers.get("content-type")
+  if (contentType?.includes("application/json")) {
+    return { data: await resp.json(), isError: false }
   }
 
-  return await resp.json()
+  return { data: null, isError: false }
 }

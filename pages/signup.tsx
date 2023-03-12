@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react'
 import { post } from '../src/api/api'
 import { BASE_URL } from '../src/api/constants'
 import BaseLayout from '../src/layouts/BaseLayout'
-import { pages } from '../src/routes/routes'
 
 
 const Signup: React.FC = () => {
@@ -31,10 +30,6 @@ const Signup: React.FC = () => {
       return
     }
 
-    console.log({
-      username,
-      password,
-    })
     const resp = await post(
       `${BASE_URL}/auth/signup`,
       {
@@ -43,7 +38,7 @@ const Signup: React.FC = () => {
       }
     )
 
-    if (resp == null) {
+    if (resp.isError) {
       console.log("Error")
       return
     }
