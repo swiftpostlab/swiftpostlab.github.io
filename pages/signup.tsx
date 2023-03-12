@@ -2,10 +2,12 @@
 import { Button, TextField, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import { post } from '../src/api/api'
 import { BASE_URL } from '../src/api/constants'
 import BaseLayout from '../src/layouts/BaseLayout'
+import { pages } from '../src/routes/routes'
 import { SessionContext } from '../src/session/contexts/SessionContext'
 
 
@@ -15,11 +17,23 @@ const Signup: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [isSignUpCompleted, setIsSignUpCompleted] = useState(false)
-  const sessionContext = useContext(SessionContext)
+  const router = useRouter()
+  const session = useContext(SessionContext)
+
+  useEffect(() => {
+    if (session.isActive()){
+      router.replace(pages.home)
+    } }, [])
 
   useEffect(() => {
     setError('')
   }, [password, confirmPassword])
+
+  useEffect(() => {
+    if (isSignUpCompleted) {
+      setTimeout(() => router.push(pages.home), 5000)
+    }
+  }, [isSignUpCompleted])
 
   const handleSignUpClick = async () => {
     if (password.length < 8) {
@@ -51,9 +65,7 @@ const Signup: React.FC = () => {
 
   const handleSignUpSuccess = async () => {
     setError('')
-    console.log('Success! Authenticating...')
-
-    const isAuthSuccess = sessionContext.login(username, password)
+    const isAuthSuccess = await session.login(username, password)
     if (!isAuthSuccess) {
       setError('Something went wrong, try again later.')
       return
@@ -77,7 +89,9 @@ const Signup: React.FC = () => {
           isSignUpCompleted ? (
             <>
               <Typography variant="h1">Sign up completed!</Typography>
-              <Typography variant="subtitle1">Go back{' '}<Link href={'/'}>home</Link></Typography>
+              <Typography variant="subtitle1">
+                Thank you. You're being redirected{' '}<Link href={'/'}>home</Link>.
+              </Typography>
             </>
           )
             : (

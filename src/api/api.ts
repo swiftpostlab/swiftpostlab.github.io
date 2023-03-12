@@ -39,8 +39,8 @@ export const post = async <BodyT = unknown, ResponseT = unknown,>(url: string, c
     return { data: null, isError: true }
   }
   
-  const contentType = resp.headers.get("content-type")
-  if (contentType?.includes("application/json")) {
+  const contentType = resp.headers.get('content-type')
+  if (contentType?.includes('application/json')) {
     return { data: await resp.json(), isError: false }
   }
 

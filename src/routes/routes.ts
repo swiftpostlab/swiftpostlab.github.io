@@ -1,4 +1,5 @@
 export const pages = {
-  signup: 'signup',
-  login: 'login',
+  home: '/',
+  signup: '/signup',
+  login: '/login',
 } as const

@@ -14,9 +14,12 @@
     "jsx-quotes": ["error", "prefer-double"],
     "no-multiple-empty-lines": "error",
     "no-multi-spaces": "error",
+    "no-return-await": "off",
     "object-curly-spacing": ["error", "always"],
+    "object-shorthand": ["error", "properties"],
     "padded-blocks": ["error", "never"],
     "quotes": ["error", "single"],
+    "require-await": "off",
     "semi": ["error", "never"],
 
     "react/react-in-jsx-scope": "off",
@@ -30,6 +33,9 @@
         "varsIgnorePattern": "^_",
         "caughtErrorsIgnorePattern": "^_"
       }
-    ]
+    ],
+    "@typescript-eslint/return-await": "error",
+    "@typescript-eslint/require-await": "error",
+    "@typescript-eslint/strict-boolean-expressions": "error"
   }
 }
