@@ -1,11 +1,11 @@
 
 import { Button, TextField, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { post } from '../src/api/api'
 import { BASE_URL } from '../src/api/constants'
 import BaseLayout from '../src/layouts/BaseLayout'
+import { SessionContext } from '../src/session/contexts/SessionContext'
 
 
 const Signup: React.FC = () => {
@@ -13,7 +13,7 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
-  const router = useRouter()
+  const sessionContext = useContext(SessionContext)
 
   useEffect(() => {
     setError('')
@@ -51,24 +51,11 @@ const Signup: React.FC = () => {
     setError("")
     console.log('Success! Authenticating...')
 
-    // Authenticate
-    const resp = await post(
-      `${BASE_URL}/auth/login`,
-      {
-        username,
-        password,
-      }
-    )
-
-    if (resp.isError) {
-      console.log("Auth error")
-      // Send to Log-in
-      return
-    }
+    const result = sessionContext.login(username, password)
 
 
     console.log('Authenticated!')
-    console.log(resp)
+    console.log(result)
   }
   
 
