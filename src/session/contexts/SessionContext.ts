@@ -12,7 +12,7 @@ interface SessionContextType {
   token: string | null
   isActive: () => boolean
   renewToken: () => Promise<boolean>
-  login: (username: string, password: string) => Promise<boolean>
+  login: (usernameOrEmail: string, password: string) => Promise<boolean>
   logout: () => void
 }
 

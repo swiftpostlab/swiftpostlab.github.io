@@ -10,7 +10,7 @@ import { SessionContext } from '../src/session/contexts/SessionContext'
 
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState('')
+  const [usernameOrEmail, setUsernameOrEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoginCompleted, setIsSignUpCompleted] = useState(false)
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
 
   const handleLoginClick = async () => {
     setError('')
-    const isAuthSuccess = await session.login(username, password)
+    const isAuthSuccess = await session.login(usernameOrEmail.trim(), password.trim())
     if (!isAuthSuccess) {
       setError('Something went wrong, try again later.')
       return
@@ -70,9 +70,9 @@ const Login: React.FC = () => {
                 <Stack direction="column" justifyContent="center" spacing="2rem" paddingTop="2rem">
                   <TextField
                     required
-                    label="Username"
-                    value={username}
-                    onChange={e => setUsername(e.target.value)}
+                    label="Username or Email"
+                    value={usernameOrEmail}
+                    onChange={e => setUsernameOrEmail(e.target.value)}
                   />
                   <TextField
                     required

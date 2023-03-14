@@ -13,8 +13,13 @@ import { SessionContext } from '../src/session/contexts/SessionContext'
 
 const Signup: React.FC = () => {
   const [username, setUsername] = useState('')
+  const [usernameError, setUsernameError] = useState('')
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPasswordError, setConfirmPasswordError] = useState('')
   const [error, setError] = useState('')
   const [isSignUpCompleted, setIsSignUpCompleted] = useState(false)
   const router = useRouter()
@@ -26,6 +31,10 @@ const Signup: React.FC = () => {
     } }, [])
 
   useEffect(() => {
+    setUsernameError('')
+    setEmailError('')
+    setPasswordError('')
+    setConfirmPasswordError('')
     setError('')
   }, [password, confirmPassword])
 
@@ -36,21 +45,36 @@ const Signup: React.FC = () => {
   }, [isSignUpCompleted])
 
   const handleSignUpClick = async () => {
-    if (password.length < 8) {
-      setError('Password too short')
+    if (username.length < 3) {
+      setUsernameError('Username too short')
       return
     }
+    setUsernameError('')
+
+    if (email.length < 6 || !email.includes('@') || !email.includes('.')) {
+      setEmailError('Email format not valid')
+      return
+    }
+    setEmailError('')
+
+    if (password.length < 8) {
+      setPasswordError('Password has less than 8 characters.')
+      return
+    }
+    setPasswordError('')
 
     if (password !== confirmPassword) {
-      setError('Password confirmation not matching')
+      setConfirmPasswordError('Password confirmation not matching')
       return
     }
+    setConfirmPasswordError('')
 
     const resp = await post(
       `${BASE_URL}/auth/signup`,
       {
-        username,
-        password,
+        username: username.trim(),
+        email: email.trim(),
+        password: password.trim(),
       }
     )
 
@@ -71,7 +95,6 @@ const Signup: React.FC = () => {
       return
     }
 
-    setError('')
     setIsSignUpCompleted(true)
   }
   
@@ -104,6 +127,18 @@ const Signup: React.FC = () => {
                     label="Username"
                     value={username}
                     onChange={e => setUsername(e.target.value)}
+                    error={usernameError !== ''}
+                    helperText={usernameError}
+                    
+                  />
+                  <TextField
+                    required
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    error={emailError !== ''}
+                    helperText={emailError}
                   />
                   <TextField
                     required
@@ -111,6 +146,8 @@ const Signup: React.FC = () => {
                     type="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
+                    error={passwordError !== ''}
+                    helperText={passwordError}
                   />
                   <TextField
                     required
@@ -118,6 +155,8 @@ const Signup: React.FC = () => {
                     type="password"
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
+                    error={confirmPasswordError !== ''}
+                    helperText={confirmPasswordError}
                   />
                   {error.length > 0 && 
                     <Typography variant="body1" color="error">

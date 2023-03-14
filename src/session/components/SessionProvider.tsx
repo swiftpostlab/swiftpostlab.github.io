@@ -7,12 +7,12 @@ import { SessionContext } from '../contexts/SessionContext'
 const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
   const [token, setToken] = useState<string|null>(null)
 
-  const login = async (username: string, password: string) => {
+  const login = async (usernameOrEmail: string, password: string) => {
     // Authenticate
     const resp = await post<unknown, {access_token: string}>(
       `${BASE_URL}/auth/login`,
       {
-        username,
+        username: usernameOrEmail,
         password,
       }
     )
@@ -23,9 +23,7 @@ const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) =>
       return false
     }
 
-    console.log(resp.data?.access_token)
     setToken(resp.data?.access_token ?? null)
-
     return true
   }
 
