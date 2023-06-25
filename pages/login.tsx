@@ -20,7 +20,8 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (session.isActive()){
       router.replace(pages.home)
-    } }, [])
+    } 
+  }, [])
 
   useEffect(() => {
     setError('')
@@ -59,7 +60,7 @@ const Login: React.FC = () => {
             <>
               <Typography variant="h1">Login completed!</Typography>
               <Typography variant="subtitle1">
-                Thank you. You're being redirected{' '}<Link href={pages.home}>home</Link>.
+                Thank you. You're being redirected{' '}<Link href={pages.verify}>home</Link>.
               </Typography>
             </>
           )

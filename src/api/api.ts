@@ -46,3 +46,22 @@ export const post = async <BodyT = unknown, ResponseT = unknown,>(url: string, c
 
   return { data: null, isError: false }
 }
+
+export const get = async <ResponseT = unknown,>(url: string): Promise<Response<ResponseT>> => {
+  const resp = await request(
+    url,
+    'GET',
+  )
+
+  if (!resp.ok) {
+    console.warn(resp.status)
+    return { data: null, isError: true }
+  }
+  
+  const contentType = resp.headers.get('content-type')
+  if (contentType?.includes('application/json')) {
+    return { data: await resp.json(), isError: false }
+  }
+
+  return { data: null, isError: false }
+}
