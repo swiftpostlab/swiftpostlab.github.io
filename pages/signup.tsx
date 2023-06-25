@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import { post } from '../src/api/api'
-import { BASE_URL } from '../src/api/constants'
+import { API_URL } from '../src/api/constants'
 import BaseLayout from '../src/layouts/BaseLayout'
 import { pages } from '../src/routes/routes'
 import { SessionContext } from '../src/session/contexts/SessionContext'
@@ -70,7 +70,7 @@ const Signup: React.FC = () => {
     setConfirmPasswordError('')
 
     const resp = await post(
-      `${BASE_URL}/auth/signup`,
+      `${API_URL}/auth/signup`,
       {
         username: username.trim(),
         email: email.trim(),
