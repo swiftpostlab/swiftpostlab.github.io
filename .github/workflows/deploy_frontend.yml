@@ -10,11 +10,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: test
 
     steps:
       - uses: actions/checkout@v3
       
       - name: Test vars
+        
         run: |
           echo "From GH vars: ${{ vars.TEST_VARIABLE }}"
           echo "From env: $TEST_VARIABLE"
