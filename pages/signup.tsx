@@ -76,7 +76,7 @@ const Signup: React.FC = () => {
 
     if (resp.isError) {
       console.log('SignUp error')
-      setError('Could not sign in. Try again later.')
+      setError('Could not sign up. Try again later.')
       return
     }
     

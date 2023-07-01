@@ -4,7 +4,7 @@ import { SessionContext } from '../contexts/SessionContext'
 
 const getTokenCookie = (): string | null => {
   const COOKIE_NAME = 'token='
-  const tokenList = document.cookie.split(';').filter(cookie => cookie.startsWith(COOKIE_NAME))
+  const tokenList = document.cookie.split(';').filter(cookie => cookie.trim().startsWith(COOKIE_NAME))
   if (tokenList.length === 0) {
     return null
   }
