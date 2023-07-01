@@ -1,4 +1,4 @@
-name: Deploy Web
+name: Deploy Test Frontend
 
 on:
   push:
@@ -14,15 +14,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Test vars
-        
-        run: |
-          echo "From GH vars: ${{ vars.TEST_VARIABLE }}"
-          echo "From env: $TEST_VARIABLE"
-          exit 1
-        env:
-          TEST_VARIABLE: ${{ vars.TEST_VARIABLE }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
