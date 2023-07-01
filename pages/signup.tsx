@@ -4,11 +4,10 @@ import { Stack } from '@mui/system'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
-import { post } from '../src/api/api'
-import { API_URL } from '../src/api/constants'
+import { authApi } from '../src/auth/api/authApi'
+import { SessionContext } from '../src/auth/contexts/SessionContext'
 import BaseLayout from '../src/layouts/BaseLayout'
 import { pages } from '../src/routes/routes'
-import { SessionContext } from '../src/session/contexts/SessionContext'
 
 
 const Signup: React.FC = () => {
@@ -69,13 +68,10 @@ const Signup: React.FC = () => {
     }
     setConfirmPasswordError('')
 
-    const resp = await post(
-      `${API_URL}/auth/signup`,
-      {
-        username: username.trim(),
-        email: email.trim(),
-        password: password.trim(),
-      }
+    const resp = await authApi.postSignUp(
+      username.trim(),
+      email.trim(),
+      password.trim()
     )
 
     if (resp.isError) {

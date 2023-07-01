@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@mui/material'
 import type { AppProps } from 'next/app'
-import SessionProvider from '../src/session/components/SessionProvider'
+import SessionProvider from '../src/auth/components/SessionProvider'
 import theme from '../src/theming/theme'
 
 

@@ -4,9 +4,9 @@ import { Stack } from '@mui/system'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
+import { SessionContext } from '../src/auth/contexts/SessionContext'
 import BaseLayout from '../src/layouts/BaseLayout'
 import { pages } from '../src/routes/routes'
-import { SessionContext } from '../src/session/contexts/SessionContext'
 
 
 const Login: React.FC = () => {

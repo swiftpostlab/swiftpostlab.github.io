@@ -4,13 +4,10 @@ import { Stack } from '@mui/system'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
-import { get } from '../src/api/api'
-import { API_URL } from '../src/api/constants'
+import { SessionContext } from '../src/auth/contexts/SessionContext'
 import BaseLayout from '../src/layouts/BaseLayout'
 import { pages } from '../src/routes/routes'
-import { SessionContext } from '../src/session/contexts/SessionContext'
-
-const verificationUrl = `${API_URL}/auth/verify`;
+import { authApi } from '../src/auth/api/authApi'
 
 
 const Verify: React.FC = () => {
@@ -39,9 +36,7 @@ const Verify: React.FC = () => {
 
   const getVerification = async (verificationToken: string) => {
 
-    const resp = await get(
-      `${verificationUrl}/${verificationToken}`
-    )
+    const resp = await authApi.getVerification(verificationToken)
 
     if (resp.isError) {
       setIsError(true)

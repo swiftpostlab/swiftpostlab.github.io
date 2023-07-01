@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { post } from '../../api/api'
-import { API_URL } from '../../api/constants'
+import { authApi } from '../api/authApi'
 import { SessionContext } from '../contexts/SessionContext'
 
 const getTokenCookie = (): string | null => {
@@ -38,21 +37,14 @@ const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) =>
 
   const login = async (usernameOrEmail: string, password: string) => {
     // Authenticate
-    const resp = await post<unknown, {access_token: string}>(
-      `${API_URL}/auth/login`,
-      {
-        username: usernameOrEmail,
-        password,
-      }
-    )
+    const resp = await authApi.postLogin(usernameOrEmail, password)
 
     if (resp.isError) {
-      console.log('Auth error')
       // Send to Log-in
       return false
     }
 
-    setToken(resp.data?.access_token ?? null)
+    setToken(resp.data.access_token)
     return true
   }
 

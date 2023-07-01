@@ -3,9 +3,9 @@ import { Button, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import { useRouter } from 'next/router'
 import React, { useContext } from 'react'
+import { SessionContext } from '../src/auth/contexts/SessionContext'
 import BaseLayout from '../src/layouts/BaseLayout'
 import { pages } from '../src/routes/routes'
-import { SessionContext } from '../src/session/contexts/SessionContext'
 
 
 const Index: React.FC = () => {
