@@ -35,6 +35,7 @@ jobs:
         run: yarn build && yarn export
         env:
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_CUSTOM_ENV: ${{ vars.NEXT_PUBLIC_CUSTOM_ENV }}
       
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
