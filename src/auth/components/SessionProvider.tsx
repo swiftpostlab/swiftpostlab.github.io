@@ -22,9 +22,7 @@ const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) =>
 
   useEffect(() => {
     const cookieToken = getTokenCookie()
-    console.log('Checking token cookie...')
     if (cookieToken != null) {
-      console.log('Token cookie found')
       setToken(cookieToken)
     }
   }, [])
