@@ -26,7 +26,10 @@ const Index: React.FC = () => {
         <Stack direction="row" justifyContent="center" spacing="2rem" paddingTop="2rem">
         {session.isActive() ? 
         (
-          <Button variant='outlined' onClick={session.logout}>Log Out</Button>
+          <>
+            <Button variant='contained' onClick={() => router.push(pages.projects)}>Projects</Button>
+            <Button onClick={session.logout}>Log Out</Button>
+          </>
         ) : (
           <>
             <Button variant='contained' onClick={() => router.push(pages.signup)}>Sign Up</Button>
