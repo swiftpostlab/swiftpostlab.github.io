@@ -2,5 +2,6 @@ export const pages = {
   home: '/',
   signup: '/signup',
   login: '/login',
-  verify: '/verify'
+  verify: '/verify',
+  projects: '/projects',
 } as const
