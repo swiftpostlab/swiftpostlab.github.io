@@ -9,9 +9,7 @@
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --project tsconfig.json",
-    "hash": "yarn-${{ hashFiles('yarn.lock') }}s",
-    "install-immutable": "yarn install --immutable --immutable-cache --check-cache"
+    "typecheck": "tsc --project tsconfig.json"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",

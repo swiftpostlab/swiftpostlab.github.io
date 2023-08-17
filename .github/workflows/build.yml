@@ -4,9 +4,6 @@ on:
   push:
     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,17 +16,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: yarn hash:front
-          restore-keys: yarn-
+          cache: 'yarn'
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install-immutable
+        run: yarn install --frozen-lockfile
 
       - name: Build website
         run: yarn build && yarn export
