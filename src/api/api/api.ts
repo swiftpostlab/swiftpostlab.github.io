@@ -1,5 +1,7 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL
 
+type Headers = Record<string, string>
+
 interface GoodResponse<DataT> {
   resp: Awaited<ReturnType<typeof fetch>>
   data: DataT,
@@ -18,7 +20,7 @@ export const request = async <ResponseDataT = unknown, >(
   url: string, 
   type: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
   options?: {
-    headers?: Record<string, string>, 
+    headers?: Headers, 
     body?: string
   }
 ): Promise<Response<ResponseDataT>> => {
@@ -41,7 +43,7 @@ export const request = async <ResponseDataT = unknown, >(
   return { resp, data: null as unknown as ResponseDataT, isError: false }
 }
 
-export const post = async <BodyT = unknown, ResponseT = unknown,>(url: string, content: BodyT): Promise<Response<ResponseT>> => {
+export const post = async <BodyT = unknown, ResponseT = unknown,>(url: string, content: BodyT, headers: Headers | null = null): Promise<Response<ResponseT>> => {
   return await request(
     url,
     'POST',
@@ -49,15 +51,21 @@ export const post = async <BodyT = unknown, ResponseT = unknown,>(url: string, c
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        ...headers
       },
       body: JSON.stringify(content),
     }
   )
 }
 
-export const get = async <ResponseT = unknown,>(url: string): Promise<Response<ResponseT>> => {
+export const get = async <ResponseT = unknown,>(url: string, headers: Headers | null = null): Promise<Response<ResponseT>> => {
   return await request(
     url,
     'GET',
+    {
+      headers: {
+        ...headers
+      }
+    }
   )
 }

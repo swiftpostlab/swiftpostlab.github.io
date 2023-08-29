@@ -1,42 +1,50 @@
 
 import { Button, Dialog, DialogActions, DialogTitle, TextField, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
-import React, { useContext, useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { useContext, useEffect, useState } from 'react'
 import { SessionContext } from '../src/auth/contexts/SessionContext'
 import BaseLayout from '../src/layouts/BaseLayout'
-
-const mocked = {
-  projects: [
-    {
-      id: 0,
-      name: "First project",
-      token: 'shdfk-i3jsi-idif-fkdjo'
-    },
-    {
-      id: 1,
-      name: "My other project",
-      token: 'shdfk-i3jsi-idif-fkdjo'
-    }
-  ]
-}
+import { Project, useProjectsApi } from '../src/projects/api/useProjectsApi'
+import { pages } from '../src/routes/routes'
 
 const useProjects = () => {
-  const [projects, setProjects] = useState(mocked.projects)
+  const [projects, setProjects] = useState<Project[]>([])
+  const projectsApi = useProjectsApi()
+
+  useEffect(() => {
+    const _f = async () => {
+      if (projectsApi.loading === false) {
+        const response = await projectsApi.getAll()
+        if (response.isError) {
+
+        }
+        const _projects = response.data
+        setProjects(_projects || []);
+      }
+    }
+    _f()
+  }, [projectsApi.loading])
 
   return {
     projects,
-    addProject: (project: {name: string, token: string, id: number}) => setProjects([project, ...projects]),
-    editProject: (id: number, editProject: {name: string, token: string}) => setProjects(
+    addProject: async (name: string) => {
+      const newProject = (await projectsApi.create(name)).data
+      if (newProject != null) {
+        setProjects([newProject, ...projects])
+      }
+    },
+    editProject: (id: string, editProject: {name: string, token: string}) => setProjects(
       projects.map((proj) => (
-        proj.id === id ? (
+        proj._id === id ? (
         {
-          id,
+          ...proj,
           ...editProject,
         }
         ) : proj
       ))
     ),
-    deleteProject: (id: number) => setProjects(projects.filter(p => p.id !== id))
+    deleteProject: (id: string) => setProjects(projects.filter(p => p._id !== id))
   }
 }
 
@@ -44,14 +52,19 @@ const useProjects = () => {
 const ProjectsPage: React.FC = () => {
   const session = useContext(SessionContext)
   const projectApi = useProjects()
+  const router = useRouter()
   const [isAddProjectDialogOpen, setIsAddProjectDialogOpen] = useState(false)
   const [isEditProjectDialogOpen, setIsEditProjectDialogOpen] = useState(false)
-  const [selectedProject, setSelectedProject] = useState<number | null>(null)
+  const [selectedProject, setSelectedProject] = useState<string | null>(null)
   const [isDeleteProjectDialogOpen, setIsDeleteProjectDialogOpen] = useState(false)
   const [newProjectName, setNewProjectName] = useState('')
 
+  if (session.loading || !router.isReady) {
+    return null
+  }
+
   if (!session.isActive()) {
-    // return null
+    router.replace(pages.login)
   }
 
   return (
@@ -59,7 +72,6 @@ const ProjectsPage: React.FC = () => {
       <Stack 
         direction="column" 
         justifyContent="center"
-        // alignItems="center"
         flexGrow={1}
         height="100%"
         padding="2rem"
@@ -85,7 +97,7 @@ const ProjectsPage: React.FC = () => {
               <Stack flexDirection="row" justifyContent="flex-end" width="100%">
                 <Button 
                   onClick={() => {
-                    setSelectedProject(project.id)
+                    setSelectedProject(project._id)
                     setIsEditProjectDialogOpen(true)
                     setNewProjectName(project.name)
                   }}
@@ -94,7 +106,7 @@ const ProjectsPage: React.FC = () => {
                 </Button>
                 <Button 
                   onClick={() => {
-                    setSelectedProject(project.id)
+                    setSelectedProject(project._id)
                     setIsDeleteProjectDialogOpen(true)
                   }}
                 >
@@ -117,12 +129,10 @@ const ProjectsPage: React.FC = () => {
               >
                 Cancel
               </Button>
-              <Button variant="contained" onClick={() => {
-                projectApi.addProject({
-                  name: newProjectName,
-                  id: projectApi.projects.length + 1,
-                  token: projectApi.projects[0].token
-                })
+              <Button variant="contained" onClick={async () => {
+                await projectApi.addProject(
+                  newProjectName
+                )
                 setIsAddProjectDialogOpen(false)
               }}>
                 Add
