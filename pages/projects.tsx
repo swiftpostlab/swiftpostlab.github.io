@@ -30,11 +30,17 @@ const useProjects = () => {
     projects,
     addProject: async (name: string) => {
       const newProject = (await projectsApi.create(name)).data
-      if (newProject != null) {
-        setProjects([newProject, ...projects])
+      if (newProject == null) {
+        return
       }
+      setProjects([newProject, ...projects])
     },
-    editProject: (id: string, editProject: {name: string, token: string}) => setProjects(
+    editProject: async (id: string, editProject: {name: string}) => {
+      const updatedProject = (await projectsApi.update(id, editProject)).data
+      if (updatedProject == null) {
+        return
+      }
+      setProjects(
       projects.map((proj) => (
         proj._id === id ? (
         {
@@ -43,8 +49,15 @@ const useProjects = () => {
         }
         ) : proj
       ))
-    ),
-    deleteProject: (id: string) => setProjects(projects.filter(p => p._id !== id))
+    )
+  },
+    deleteProject: async (id: string) => {
+      const response = await projectsApi.delete(id)
+      if (response.isError) {
+        return
+      }
+      setProjects(projects.filter(p => p._id !== id))
+    }
   }
 }
 
@@ -158,7 +171,6 @@ const ProjectsPage: React.FC = () => {
                     selectedProject,
                     {
                       name: newProjectName,
-                      token: projectApi.projects[0].token
                     }
                   )
                 }

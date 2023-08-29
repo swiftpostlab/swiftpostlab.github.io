@@ -14,6 +14,14 @@ export interface Project {
 export const useProjectsApi = () => {
   const {post, get, loading} = useApi();
 
+  type ProjectGetAllResponse = Project[];
+
+  const getAll = async (): Promise<Response<ProjectGetAllResponse>> => {
+    return await get<ProjectGetAllResponse>(
+      `${API_URL}/projects`,
+    )
+  }
+
   interface ProjectCreateRequest {
     name: string
   }
@@ -29,17 +37,36 @@ export const useProjectsApi = () => {
     )
   }
 
-  type ProjectGetAllResponse = Project[];
+  interface ProjectUpdateRequest {
+    name?: string;
+    data?: string;
+  }
+  
+  type ProjectUpdateResponse = Project;
 
-  const getAll = async (): Promise<Response<ProjectGetAllResponse>> => {
-    return await get<ProjectGetAllResponse>(
-      `${API_URL}/projects`,
+  const update = async (projectId: string, data: ProjectUpdateRequest): Promise<Response<ProjectUpdateResponse>> => {
+    return await post<ProjectUpdateRequest, ProjectUpdateResponse>(
+      `${API_URL}/projects/${projectId}`,
+      {
+        ...data
+      }
+    )
+  }
+  
+  type ProjectDeleteResponse = null;
+
+  const _delete = async (projectId: string): Promise<Response<ProjectDeleteResponse>> => {
+    return await get<ProjectDeleteResponse>(
+      `${API_URL}/projects/${projectId}`,
     )
   }
 
+
   return {
     loading,
+    getAll,
     create,
-    getAll
+    update,
+    delete: _delete
   }
 }
