@@ -71,7 +71,7 @@ const Signup: React.FC = () => {
     const resp = await authApi.postSignUp(
       username.trim(),
       email.trim(),
-      password.trim()
+      password.trim(),
     )
 
     if (resp.isError) {

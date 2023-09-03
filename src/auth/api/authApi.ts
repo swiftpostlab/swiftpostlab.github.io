@@ -1,8 +1,8 @@
-import { API_URL, get, post, Response } from "../../api/api/api"
+import { API_URL, get, post, Response } from '../../api/api/api'
 
 const getVerification = async (verificationToken: string) => 
-  await get<void>(
-    `${API_URL}/auth/verify/${verificationToken}`
+  get<void>(
+    `${API_URL}/auth/verify/${verificationToken}`,
   )
 
   interface PostLoginRequest {
@@ -14,15 +14,15 @@ const getVerification = async (verificationToken: string) =>
     access_token: string
   }
   
-  const postLogin = async (usernameOrEmail: string, password: string): Promise<Response<PostLoginResponse>> => {
-    return await post<PostLoginRequest, PostLoginResponse>(
-      `${API_URL}/auth/login`,
-      {
-        username: usernameOrEmail,
-        password,
-      }
-    )
-  }
+const postLogin = async (usernameOrEmail: string, password: string): Promise<Response<PostLoginResponse>> => {
+  return post<PostLoginRequest, PostLoginResponse>(
+    `${API_URL}/auth/login`,
+    {
+      username: usernameOrEmail,
+      password,
+    },
+  )
+}
 
   interface PostSignUpRequest {
     username: string,
@@ -30,16 +30,16 @@ const getVerification = async (verificationToken: string) =>
     email: string,
   }
 
-  const postSignUp = async (username: string, email: string, password: string): Promise<Response<void>> => {
-    return await post<PostSignUpRequest, void>(
-      `${API_URL}/auth/signup`,
-      {
-        username: username.trim(),
-        email: email.trim(),
-        password: password.trim(),
-      }
-    )
-  }
+const postSignUp = async (username: string, email: string, password: string): Promise<Response<void>> => {
+  return post<PostSignUpRequest, void>(
+    `${API_URL}/auth/signup`,
+    {
+      username: username.trim(),
+      email: email.trim(),
+      password: password.trim(),
+    },
+  )
+}
 
 export const authApi = {
   getVerification,

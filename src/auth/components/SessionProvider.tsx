@@ -53,7 +53,7 @@ const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) =>
   const logout = () => setToken(null)
 
   return (
-    <SessionContext.Provider value={{ token, loading: loading, login, renewToken, isActive, logout }}>
+    <SessionContext.Provider value={{ token, loading, login, renewToken, isActive, logout }}>
       {children}
     </SessionContext.Provider>
   )

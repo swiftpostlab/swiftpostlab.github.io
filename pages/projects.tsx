@@ -17,10 +17,10 @@ const useProjects = () => {
       if (projectsApi.loading === false) {
         const response = await projectsApi.getAll()
         if (response.isError) {
-
+          console.log('error')
         }
         const _projects = response.data
-        setProjects(_projects || []);
+        setProjects(_projects || [])
       }
     }
     _f()
@@ -41,23 +41,23 @@ const useProjects = () => {
         return
       }
       setProjects(
-      projects.map((proj) => (
-        proj._id === id ? (
-        {
-          ...proj,
-          ...editProject,
-        }
-        ) : proj
-      ))
-    )
-  },
+        projects.map((proj) => (
+          proj._id === id ? (
+            {
+              ...proj,
+              ...editProject,
+            }
+          ) : proj
+        )),
+      )
+    },
     deleteProject: async (id: string) => {
       const response = await projectsApi.delete(id)
       if (response.isError) {
         return
       }
       setProjects(projects.filter(p => p._id !== id))
-    }
+    },
   }
 }
 
@@ -104,7 +104,7 @@ const ProjectsPage: React.FC = () => {
                     paddingRight: '0.5em',
                   }}
                 >{
-                  project.token}
+                    project.token}
                 </code>
               </Typography>
               <Stack flexDirection="row" justifyContent="flex-end" width="100%">
@@ -135,16 +135,16 @@ const ProjectsPage: React.FC = () => {
           <Stack padding="2rem">
             <DialogTitle>Add project</DialogTitle>
             <TextField id="outlined-basic" label="Name" variant="outlined" value={newProjectName} onChange={(e) => setNewProjectName(e.target.value)}/>
-            <DialogActions  sx={{marginTop: '2rem'}}>
+            <DialogActions sx={{ marginTop: '2rem' }}>
               <Button variant="contained" onClick={() => {
-                  setIsAddProjectDialogOpen(false)
-                }}
+                setIsAddProjectDialogOpen(false)
+              }}
               >
                 Cancel
               </Button>
               <Button variant="contained" onClick={async () => {
                 await projectApi.addProject(
-                  newProjectName
+                  newProjectName,
                 )
                 setIsAddProjectDialogOpen(false)
               }}>
@@ -158,8 +158,8 @@ const ProjectsPage: React.FC = () => {
           <Stack padding="2rem">
             <DialogTitle>Edit project</DialogTitle>
             <TextField id="outlined-basic" label="Name" variant="outlined" value={newProjectName} onChange={(e) => setNewProjectName(e.target.value)}/>
-            <DialogActions  sx={{marginTop: '2rem'}}>
-            <Button variant="contained" onClick={() => {
+            <DialogActions sx={{ marginTop: '2rem' }}>
+              <Button variant="contained" onClick={() => {
                 setIsEditProjectDialogOpen(false)
                 setSelectedProject(null)
               }}>
@@ -171,7 +171,7 @@ const ProjectsPage: React.FC = () => {
                     selectedProject,
                     {
                       name: newProjectName,
-                    }
+                    },
                   )
                 }
                 setIsEditProjectDialogOpen(false)
@@ -189,8 +189,8 @@ const ProjectsPage: React.FC = () => {
             <Typography>
               Warning: this will delete the project permanently and cannot be undone.
             </Typography>
-            <DialogActions  sx={{marginTop: '2rem'}}>
-            <Button variant="contained" onClick={() => {
+            <DialogActions sx={{ marginTop: '2rem' }}>
+              <Button variant="contained" onClick={() => {
                 setIsDeleteProjectDialogOpen(false)
                 setSelectedProject(null)
               }}>
@@ -199,7 +199,7 @@ const ProjectsPage: React.FC = () => {
               <Button variant="contained" onClick={() => {
                 if (selectedProject != null) {
                   projectApi.deleteProject(
-                    selectedProject
+                    selectedProject,
                   )
                 }
                 setIsDeleteProjectDialogOpen(false)

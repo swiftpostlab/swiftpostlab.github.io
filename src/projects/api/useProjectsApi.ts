@@ -1,23 +1,23 @@
-import { API_URL, Response } from "../../api/api/api";
-import { useApi } from "../../api/api/useApi";
+import { API_URL, Response } from '../../api/api/api'
+import { useApi } from '../../api/api/useApi'
 
 export interface Project {
-  "token": string,
-  "expirationDate": string,
-  "name": string,
-  "data": string,
-  "created": string,
-  "updated": string,
-  "_id": string,
+  'token': string,
+  'expirationDate': string,
+  'name': string,
+  'data': string,
+  'created': string,
+  'updated': string,
+  '_id': string,
 }
 
 export const useProjectsApi = () => {
-  const {post, get, loading} = useApi();
+  const { post, get, loading } = useApi()
 
   type ProjectGetAllResponse = Project[];
 
   const getAll = async (): Promise<Response<ProjectGetAllResponse>> => {
-    return await get<ProjectGetAllResponse>(
+    return get<ProjectGetAllResponse>(
       `${API_URL}/projects`,
     )
   }
@@ -29,11 +29,11 @@ export const useProjectsApi = () => {
   type ProjectCreateResponse = Project;
 
   const create = async (name: string): Promise<Response<ProjectCreateResponse>> => {
-    return await post<ProjectCreateRequest, ProjectCreateResponse>(
+    return post<ProjectCreateRequest, ProjectCreateResponse>(
       `${API_URL}/projects`,
       {
-        name
-      }
+        name,
+      },
     )
   }
 
@@ -45,18 +45,18 @@ export const useProjectsApi = () => {
   type ProjectUpdateResponse = Project;
 
   const update = async (projectId: string, data: ProjectUpdateRequest): Promise<Response<ProjectUpdateResponse>> => {
-    return await post<ProjectUpdateRequest, ProjectUpdateResponse>(
+    return post<ProjectUpdateRequest, ProjectUpdateResponse>(
       `${API_URL}/projects/${projectId}`,
       {
-        ...data
-      }
+        ...data,
+      },
     )
   }
   
   type ProjectDeleteResponse = null;
 
   const _delete = async (projectId: string): Promise<Response<ProjectDeleteResponse>> => {
-    return await get<ProjectDeleteResponse>(
+    return get<ProjectDeleteResponse>(
       `${API_URL}/projects/${projectId}`,
     )
   }
@@ -67,6 +67,6 @@ export const useProjectsApi = () => {
     getAll,
     create,
     update,
-    delete: _delete
+    delete: _delete,
   }
 }

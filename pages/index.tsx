@@ -24,18 +24,18 @@ const Index: React.FC = () => {
         <Typography variant="h1">SwiftPost</Typography>
         <Typography variant="subtitle1">Swift web generation</Typography>
         <Stack direction="row" justifyContent="center" spacing="2rem" paddingTop="2rem">
-        {session.isActive() ? 
-        (
-          <>
-            <Button variant='contained' onClick={() => router.push(pages.projects)}>Projects</Button>
-            <Button onClick={session.logout}>Log Out</Button>
-          </>
-        ) : (
-          <>
-            <Button variant='contained' onClick={() => router.push(pages.signup)}>Sign Up</Button>
-            <Button variant='outlined' onClick={() => router.push(pages.login)}>Log In</Button>
-          </>
-        )}
+          {session.isActive() ? 
+            (
+              <>
+                <Button variant="contained" onClick={() => router.push(pages.projects)}>Projects</Button>
+                <Button onClick={session.logout}>Log Out</Button>
+              </>
+            ) : (
+              <>
+                <Button variant="contained" onClick={() => router.push(pages.signup)}>Sign Up</Button>
+                <Button variant="outlined" onClick={() => router.push(pages.login)}>Log In</Button>
+              </>
+            )}
         </Stack>
         
       </Stack>

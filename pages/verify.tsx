@@ -35,7 +35,6 @@ const Verify: React.FC = () => {
   }, [isVerificationCompleted])
 
   const getVerification = async (verificationToken: string) => {
-
     const resp = await authApi.getVerification(verificationToken)
 
     if (resp.isError) {
@@ -65,20 +64,20 @@ const Verify: React.FC = () => {
               </Typography>
             </>
           )
-          : isVerificationCompleted ? (
-            <>
-              <Typography variant="h1">Verification succeded</Typography>
-              <Typography variant="subtitle1">
-                Thank you for verifying your email. You're being redirected{' '}<Link href={pages.home}>home</Link>.
-              </Typography>
-            </>
-          )
-            : (
+            : isVerificationCompleted ? (
               <>
-                <Typography variant="h1">Confirm verification</Typography>
-                <Typography variant="subtitle1">Please, wait a moment while we verify...</Typography>
+                <Typography variant="h1">Verification succeded</Typography>
+                <Typography variant="subtitle1">
+                Thank you for verifying your email. You're being redirected{' '}<Link href={pages.home}>home</Link>.
+                </Typography>
               </>
             )
+              : (
+                <>
+                  <Typography variant="h1">Confirm verification</Typography>
+                  <Typography variant="subtitle1">Please, wait a moment while we verify...</Typography>
+                </>
+              )
         }
         
       </Stack>

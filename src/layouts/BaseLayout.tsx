@@ -17,7 +17,7 @@ const BaseLayout: React.FC<Props> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main >
-        <Stack minHeight='100vh' minWidth='100%'>
+        <Stack minHeight="100vh" minWidth="100%">
           <Stack 
             maxWidth="1200px"
             paddingBottom="2.5rem"
