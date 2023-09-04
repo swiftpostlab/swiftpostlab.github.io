@@ -48,7 +48,7 @@ const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) =>
     return true
   }
 
-  const renewToken = async () => { console.log('Not implemented yet'); return false }
+  const renewToken = async () => { await console.log('Not implemented yet'); return false }
   const isActive = () => token != null
   const logout = () => setToken(null)
 

@@ -13,8 +13,8 @@ const defaultContext: SessionContextType = {
   token: null,
   loading: true,
   isActive: () => { console.log('Not within the SessionContext'); return false },
-  renewToken: async () => { console.log('Not within the SessionContext'); return false },
-  login: async (_username: string, _password: string) => { console.log('Not within the SessionContext'); return false },
+  renewToken: async () => { await console.log('Not within the SessionContext'); return false },
+  login: async (_username: string, _password: string) => { await console.log('Not within the SessionContext'); return false },
   logout: () => console.log('Not within the SessionContext'),
 }
 

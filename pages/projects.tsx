@@ -205,7 +205,7 @@ const ProjectsPage: React.FC = () => {
                 setIsDeleteProjectDialogOpen(false)
                 setSelectedProject(null)
               }}>
-                I'm sure to delete my project
+                {'I\'m sure to delete my project'}
               </Button>
             </DialogActions>
           </Stack>

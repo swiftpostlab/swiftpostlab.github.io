@@ -4,10 +4,10 @@ import { Stack } from '@mui/system'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
+import { authApi } from '../src/auth/api/authApi'
 import { SessionContext } from '../src/auth/contexts/SessionContext'
 import BaseLayout from '../src/layouts/BaseLayout'
 import { pages } from '../src/routes/routes'
-import { authApi } from '../src/auth/api/authApi'
 
 
 const Verify: React.FC = () => {
@@ -22,7 +22,7 @@ const Verify: React.FC = () => {
       const params = router.query.params
       const token = Array.isArray(params) ? params[0] : params
   
-      if (token) {
+      if (token != null) {
         getVerification(token)
       }
     }
@@ -68,7 +68,7 @@ const Verify: React.FC = () => {
               <>
                 <Typography variant="h1">Verification succeded</Typography>
                 <Typography variant="subtitle1">
-                Thank you for verifying your email. You're being redirected{' '}<Link href={pages.home}>home</Link>.
+                  {'Thank you for verifying your email. You\'re being redirected '}<Link href={pages.home}>home</Link>.
                 </Typography>
               </>
             )
